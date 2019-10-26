@@ -9,11 +9,17 @@ main :: IO ()
 main = hspec $ do
   -- test CommonFunctions
   describe "CommonFunctions.f1" $ do
-    it "f(c, z) where c = 1 + 1i and z = 2 is 5 + 1i" $
-      f1 (1.0 :+ 1.0) 2.0 `shouldBe` (5.0 :+ 1.0)
+    it "f1 should work with only real numbers" $
+      f1 1 2 `shouldBe` 5
 
-    it "f(c, z) where c = 7.2 + 9.2i and z = 3.2 is 17.44 + 9.2i" $
-      f1 (7.2 :+ 9.2) 3.2 `shouldBe` (17.44 :+ 9.2)
+    it "f1 should work with imaginary constant and real variable" $
+      f1 (1 :+ 1) 2 `shouldBe` (5 :+ 1)
+
+    it "f1 should work with real constant and imaginary variable" $
+      f1 2 (2 :+ 3) `shouldBe` ((-3) :+ 12)
+
+    it "f1 should work with only complex numbers" $
+      f1 (7.2 :+ 9.2) (3.2 :+ 1.9) `shouldBe` (13.83 :+ 21.36)
 
     it "should use partial application to create function with constant c" $ do
       let f2 = f1 (3.1 :+ 4.8)
