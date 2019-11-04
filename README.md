@@ -25,6 +25,7 @@ or, alternatively:
    * show speedup when working with large images
 
 # next steps
- * play with color schemes
+ * make it accept command line input
+ * write speedtest
  * generate large images
  * work on speedup
