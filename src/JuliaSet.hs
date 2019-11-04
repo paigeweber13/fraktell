@@ -21,6 +21,7 @@ computeJuliaSet f escapeRadius width height maxIter
     xstep = 2*escapeRadius/(fromIntegral width)
     ystep = 2*escapeRadius/(fromIntegral height)
 
+-- complex and real parts of z must be between -escapeRadius and escapeRadius
 julia:: (Complex Double -> Complex Double)
       -> Complex Double
       -> Double -- escapeRadius
@@ -28,7 +29,7 @@ julia:: (Complex Double -> Complex Double)
       -> Int -- result
 julia f z escapeRadius maxIter = juliaRecursive f z escapeRadius 1 maxIter
 
--- complex and real parts must be between -escapeRadius and escapeRadius
+-- not meant to be called by user; use julia instead
 juliaRecursive :: (Complex Double -> Complex Double)
       -> Complex Double
       -> Double -- escapeRadius
