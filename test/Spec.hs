@@ -9,16 +9,16 @@ main :: IO ()
 main = hspec $ do
   -- test CommonFunctions
   describe "CommonFunctions.f1" $ do
-    it "f1 should work with only real numbers" $
+    it "should work with only real numbers" $
       f1 1 2 `shouldBe` 5
 
-    it "f1 should work with complex constant and real variable" $
+    it "should work with complex constant and real variable" $
       f1 (1 :+ 1) 2 `shouldBe` (5 :+ 1)
 
-    it "f1 should work with real constant and complex variable" $
+    it "should work with real constant and complex variable" $
       f1 2 (2 :+ 3) `shouldBe` ((-3) :+ 12)
 
-    it "f1 should work with only complex numbers" $
+    it "should work with only complex numbers" $
       f1 (7 :+ 9.25) (3 :+ 2) `shouldBe` (12 :+ 21.25)
 
     it "should use partial application to create function with constant c" $ do
