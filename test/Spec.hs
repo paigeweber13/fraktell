@@ -4,6 +4,7 @@ import Test.Hspec
 import Test.QuickCheck
 
 import CommonFunctions
+import JuliaSet
 
 main :: IO ()
 main = hspec $ do
@@ -26,3 +27,11 @@ main = hspec $ do
       f2 5 `shouldBe` (41 :+ 4)
       f2 5.5 `shouldBe` (46.25 :+ 4)
       f2 6 `shouldBe` (52 :+ 4)
+
+  -- test JuliaSet
+  describe "JuliaSet.julia" $ do
+    let f = f1 ((-0.4) :+ 0.65)
+    it "should produce 1 for z = -1.5 + 1.0i where f = z^2 -0.4 + 0.65i" $
+      julia f ((-1.5) :+ (1.0)) 2 1000 `shouldBe` 1
+    it "should be > 1 for z = -0.4 + 0.4i where f = z^2 -0.4 + 0.65i" $
+      julia f ((-0.4) :+ 0.4) 2 1000 `shouldSatisfy` (> 1)
