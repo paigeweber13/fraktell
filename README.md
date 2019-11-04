@@ -7,6 +7,10 @@ Run the following in the fraktell directory:
     stack build
     stack exec fraktell-exe
 
+or, alternatively:
+
+    stack run
+
 ## tests
     stack test
 
