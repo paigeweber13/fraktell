@@ -1,6 +1,7 @@
 module JuliaSet where
 
 import Data.Complex
+import Graphics.Image
 
 -- make this work for arbitrary funciton (use arbitrary number of params?)
 --    alternatively, assume that whatever function will only take one value, z,
@@ -13,17 +14,33 @@ computeJuliaSet :: (Complex Double -> Complex Double)
                 -> Int
                 -> Int
                 -> Int
-                -> [[Double]]
+                -> IO ()
 computeJuliaSet f escapeRadius width height maxIter
-  = output
-  where 
-    output = [[]]
-    xstep = 2*escapeRadius/(fromIntegral width)
-    ystep = 2*escapeRadius/(fromIntegral height)
+  = writeImage "images/output.png" makeJuliaImage
+    where
+      makeJuliaImage = makeImageR VU (width, height) g
+      g = pixelToJuliaSetValue f escapeRadius width height maxIter
+
+pixelToJuliaSetValue :: (Complex Double -> Complex Double) -- f
+                     -> Double -- escapeRadius
+                     -> Int -- width
+                     -> Int -- height
+                     -> Int -- maxIter
+                     -> (Int, Int) -- i, j
+                     -> Pixel Y Double -- result: pixel value
+pixelToJuliaSetValue f escapeRadius width height maxIter (i, j)
+    = PixelY grayValue
+      where
+        grayValue = (fromIntegral (julia f (x :+ y) escapeRadius maxIter))/
+                    (fromIntegral maxIter)
+        x = -escapeRadius + (2*escapeRadius/(fromIntegral width)) * 
+          (fromIntegral i)
+        y = -escapeRadius + (2*escapeRadius/(fromIntegral height)) *
+          (fromIntegral j)
 
 -- complex and real parts of z must be between -escapeRadius and escapeRadius
-julia:: (Complex Double -> Complex Double)
-      -> Complex Double
+julia:: (Complex Double -> Complex Double) -- f
+      -> Complex Double -- z
       -> Double -- escapeRadius
       -> Int -- maxIter
       -> Int -- result
@@ -38,7 +55,7 @@ juliaRecursive :: (Complex Double -> Complex Double)
       -> Int -- result
 juliaRecursive f z escapeRadius i maxIter
   | i > maxIter = 0
-  | magnitude(z') > escapeRadius = i
+  | Data.Complex.magnitude(z') > escapeRadius = i
   | otherwise = juliaRecursive f z' escapeRadius (i+1) maxIter
     where
       z' = f z
