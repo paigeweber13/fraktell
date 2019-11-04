@@ -1,6 +1,15 @@
 # fraktell
 Fractal visualization in haskell
 
+# running:
+Run the following in the fraktell directory:
+
+    stack build
+    stack exec fraktell-exe
+
+## tests
+    stack test
+
 # goals
  * demonstrate good software development practices
    * unittests
