@@ -23,3 +23,8 @@ or, alternatively:
      application..." case)
  * explore parallelism in haskell
    * show speedup when working with large images
+
+# next steps
+ * play with color schemes
+ * generate large images
+ * work on speedup
