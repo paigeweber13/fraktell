@@ -2,17 +2,17 @@ name:                fraktell
 version:             0.1.0.0
 github:              "rileyweber13/fraktell"
 license:             MIT
-author:              "Author name here"
-maintainer:          "example@example.com"
-copyright:           "2019 Author name here"
+author:              "Riley Weber"
+maintainer:          "rileyw13@protonmail.com"
+copyright:           "2019 Riley Weber"
 
 extra-source-files:
 - README.md
 - ChangeLog.md
 
 # Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
+# synopsis:            Visualiztion of fractals
+# category:            Math
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
