@@ -9,14 +9,15 @@ import Graphics.Image
 -- in the output, x is the real portion of the result and y is the imaginary
 -- portion, with these values laid out as one would expect with a cartesian
 -- grid
-visualizeJuliaSet :: (Complex Double -> Complex Double)
-                -> Double 
-                -> Int
-                -> Int
-                -> Int
+visualizeJuliaSet :: (Complex Double -> Complex Double) -- f
+                -> Double -- escapeRadius
+                -> Int -- width in pixels
+                -> Int -- height in pixels
+                -> Int -- maxIter
+                -> String -- output file name
                 -> IO ()
-visualizeJuliaSet f escapeRadius width height maxIter
-  = writeImage "images/output.png" makeJuliaImage
+visualizeJuliaSet f escapeRadius width height maxIter outputFilename
+  = writeImage outputFilename makeJuliaImage
     where
       makeJuliaImage = makeImageR RSU (width, height) g
       g = pixelToJuliaSetValue f escapeRadius width height maxIter
