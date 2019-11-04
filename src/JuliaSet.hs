@@ -3,23 +3,22 @@ module JuliaSet where
 import Data.Complex
 import Graphics.Image
 
--- make this work for arbitrary funciton (use arbitrary number of params?)
---    alternatively, assume that whatever function will only take one value, z,
---    as input, and other parameters can be applied through partial application
+-- This will work for any function with one complex number z as input.
+-- Constants and coefficients must be set through partial application 
 
 -- in the output, x is the real portion of the result and y is the imaginary
 -- portion, with these values laid out as one would expect with a cartesian
 -- grid
-computeJuliaSet :: (Complex Double -> Complex Double)
+visualizeJuliaSet :: (Complex Double -> Complex Double)
                 -> Double 
                 -> Int
                 -> Int
                 -> Int
                 -> IO ()
-computeJuliaSet f escapeRadius width height maxIter
+visualizeJuliaSet f escapeRadius width height maxIter
   = writeImage "images/output.png" makeJuliaImage
     where
-      makeJuliaImage = makeImageR VU (width, height) g
+      makeJuliaImage = makeImageR RSU (width, height) g
       g = pixelToJuliaSetValue f escapeRadius width height maxIter
 
 pixelToJuliaSetValue :: (Complex Double -> Complex Double) -- f
@@ -28,12 +27,13 @@ pixelToJuliaSetValue :: (Complex Double -> Complex Double) -- f
                      -> Int -- height
                      -> Int -- maxIter
                      -> (Int, Int) -- i, j
-                     -> Pixel Y Double -- result: pixel value
+                     -> Pixel RGB Double -- result: pixel value
 pixelToJuliaSetValue f escapeRadius width height maxIter (i, j)
-    = PixelY grayValue
+    = toPixelRGB (PixelHSI pixelValue 0.5 0.5)
       where
-        grayValue = (fromIntegral (julia f (x :+ y) escapeRadius maxIter))/
-                    (fromIntegral maxIter)
+        pixelValue :: Double
+        pixelValue = (fromIntegral (julia f (x :+ y) escapeRadius maxIter))/
+                    (fromIntegral maxIter+1)
         x = -escapeRadius + (2*escapeRadius/(fromIntegral width)) * 
           (fromIntegral j)
         y = -(-escapeRadius + (2*escapeRadius/(fromIntegral height)) *
