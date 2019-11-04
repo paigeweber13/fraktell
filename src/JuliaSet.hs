@@ -39,7 +39,7 @@ pixelToJuliaSetValue f escapeRadius width height maxIter (i, j)
           (fromIntegral j)
 
 -- complex and real parts of z must be between -escapeRadius and escapeRadius
-julia:: (Complex Double -> Complex Double) -- f
+julia :: (Complex Double -> Complex Double) -- f
       -> Complex Double -- z
       -> Double -- escapeRadius
       -> Int -- maxIter
@@ -54,7 +54,7 @@ juliaRecursive :: (Complex Double -> Complex Double)
       -> Int -- maxIter
       -> Int -- result
 juliaRecursive f z escapeRadius i maxIter
-  | i > maxIter = 0
+  | i > maxIter = maxIter
   | Data.Complex.magnitude(z') > escapeRadius = i
   | otherwise = juliaRecursive f z' escapeRadius (i+1) maxIter
     where
