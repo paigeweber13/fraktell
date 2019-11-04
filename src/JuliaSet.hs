@@ -8,7 +8,8 @@ import Graphics.Image
 --    as input, and other parameters can be applied through partial application
 
 -- in the output, x is the real portion of the result and y is the imaginary
--- portion
+-- portion, with these values laid out as one would expect with a cartesian
+-- grid
 computeJuliaSet :: (Complex Double -> Complex Double)
                 -> Double 
                 -> Int
@@ -34,9 +35,9 @@ pixelToJuliaSetValue f escapeRadius width height maxIter (i, j)
         grayValue = (fromIntegral (julia f (x :+ y) escapeRadius maxIter))/
                     (fromIntegral maxIter)
         x = -escapeRadius + (2*escapeRadius/(fromIntegral width)) * 
-          (fromIntegral i)
-        y = -escapeRadius + (2*escapeRadius/(fromIntegral height)) *
           (fromIntegral j)
+        y = -(-escapeRadius + (2*escapeRadius/(fromIntegral height)) *
+          (fromIntegral i))
 
 -- complex and real parts of z must be between -escapeRadius and escapeRadius
 julia :: (Complex Double -> Complex Double) -- f
