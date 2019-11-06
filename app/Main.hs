@@ -1,6 +1,7 @@
 module Main where
 
 import Data.Complex
+import Data.Tuple
 import System.Environment
 
 import CommonFunctions
@@ -12,32 +13,25 @@ main = do
   if length args < 5 then do
     usage
   else do
-    processedArgs <- parseArgs args
-    outputFilename <- (args !! 4)
+    let outputFilename = args !! 4
     putStrLn "visualizing julia set..."
-    visualizeJuliaSet 
-      (processedArgs !! 0)
-      (processedArgs !! 1)
-      (processedArgs !! 2)
-      (processedArgs !! 3)
-      (processedArgs !! 4)
-    putStrLn ("Done! Output to " ++ outputFilename)
+    runWithCliArgs args
+    putStrLn ("Done! Image output to " ++ outputFilename)
 
 -- takes string cli args and returns processed args for visualizeJuliaSet
-parseArgs :: [String] -> (
-  (Complex Double -> Complex Double), Double, Int, Int, Int, String)
-parseArgs args
+runWithCliArgs :: [String] -> IO()
+runWithCliArgs args
   -- | (length args) < 5 = do
   --     usage
   --     putStrLn "using default values " ++ (show (
   --       default_func, 1.5, 1000, 1000, 100, "images/output.png"))
   --     (default_func, 1.5, 1000, 1000, 100, "images/output.png")
-  | (length args) < 6 = (default_func, r, width, height, maxIter, 
-                         outputFilename)
-  | (length args) < 7 = ((parseFunctionParams func_num []), r, width, height,
-                         maxIter, outputFilename)
-  | (length args) < 8 = ((parseFunctionParams func_num params), r, width,
-                         height, maxIter, outputFilename)
+  | (length args) < 6 = visualizeJuliaSet default_func r width height
+                          maxIter outputFilename
+  | (length args) < 7 = visualizeJuliaSet (parseFunctionParams func_num [])
+                          r width height maxIter outputFilename
+  | (length args) < 8 = visualizeJuliaSet (parseFunctionParams func_num params)
+                          r width height maxIter outputFilename
   where
     default_func = f1 ((-0.4) :+ 0.65)
     r = read (args !! 0) :: Double
@@ -59,10 +53,13 @@ parseFunctionParams func_num params
     | func_num == 1 = f1 (params!!0)
 
 usage = do
-  prog <- getProgName
+  let prog = "stack run"
+  -- prog <- getProgName
   putStrLn ("Usage: " ++ prog ++ " escape_radius width height "
     ++ "max_iter output_filename [func_num")
   putStrLn ("                    [constant1 [constant2] ... ]]")
   putStrLn ""
   putStrLn ("number of constants must correspond to the number of constants "
     ++ "function func_num takes")
+  putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "
+    ++ "\"images/output.png\"")
