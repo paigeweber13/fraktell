@@ -66,4 +66,4 @@ usage = do
   putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "
     ++ "\"images/output.png\"")
   putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "
-    ++ "\"images/output.png\" 1 "(0.285 :+ 0)"")
+    ++ "\"images/output.png\" 1 \"(0.285 :+ 0)\"")
