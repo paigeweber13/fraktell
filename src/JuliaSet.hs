@@ -15,11 +15,13 @@ visualizeJuliaSet :: (Complex Double -> Complex Double) -- f
                 -> Int -- height in pixels
                 -> Int -- maxIter
                 -> String -- output file name
+                -> String -- array representation
                 -> IO ()
-visualizeJuliaSet f escapeRadius width height maxIter outputFilename
-  = writeImage outputFilename makeJuliaImage
+visualizeJuliaSet f escapeRadius width height maxIter outputFilename arrType
+  | arrType == "VU" = writeImage outputFilename (makeImageR VU (width, height) g)
+  | arrType == "RSU" = writeImage outputFilename (makeImageR RSU (width, height) g)
+  | otherwise = writeImage outputFilename (makeImageR RPU (width, height) g)
     where
-      makeJuliaImage = makeImageR RSU (width, height) g
       g = pixelToJuliaSetValue f escapeRadius width height maxIter
 
 pixelToJuliaSetValue :: (Complex Double -> Complex Double) -- f

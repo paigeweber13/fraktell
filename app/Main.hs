@@ -29,11 +29,11 @@ runWithCliArgs args
   --       default_func, 1.5, 1000, 1000, 100, "images/output.png"))
   --     (default_func, 1.5, 1000, 1000, 100, "images/output.png")
   | (length args) < 6 = visualizeJuliaSet default_func r width height
-                          maxIter outputFilename
+                          maxIter outputFilename "RSU" 
   | (length args) < 7 = visualizeJuliaSet (parseFunctionParams func_num [])
-                          r width height maxIter outputFilename
+                          r width height maxIter outputFilename "RSU" 
   | (length args) < 8 = visualizeJuliaSet (parseFunctionParams func_num params)
-                          r width height maxIter outputFilename
+                          r width height maxIter outputFilename "RSU" 
   where
     default_func = f1 ((-0.4) :+ 0.65)
     r = read (args !! 0) :: Double
