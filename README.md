@@ -11,6 +11,11 @@ or, alternatively:
 
     stack run
 
+examples:
+
+    stack run 1.5 1000 1000 100 "images/output.png"
+    stack run 1.5 1000 1000 100 "images/output.png" 1 "(0.285 :+ 0)"
+
 ## tests
     stack test
 
@@ -25,7 +30,7 @@ or, alternatively:
    * show speedup when working with large images
 
 # next steps
- * make it accept command line input
  * write speedtest
  * generate large images
  * work on speedup
+ * play around with different fractals that we can generate

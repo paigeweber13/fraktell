@@ -1,9 +1,11 @@
 module Main where
 
+-- third party imports
 import Data.Complex
 import Data.Tuple
 import System.Environment
 
+-- local imports
 import CommonFunctions
 import JuliaSet
 
@@ -63,3 +65,5 @@ usage = do
     ++ "function func_num takes")
   putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "
     ++ "\"images/output.png\"")
+  putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "
+    ++ "\"images/output.png\" 1 "(0.285 :+ 0)"")
