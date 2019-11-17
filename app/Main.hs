@@ -13,11 +13,11 @@ import JuliaSet
 main :: IO ()
 main = do
   args <- getArgs
-  if length args > 0 && length args < 5 && (args !! 0) == "b" then do
-    visualizeJuliaBench
+  if length args == 0 then do
+    usage
   else do
     if length args < 5 then do
-      usage
+      visualizeJuliaBench
     else do
       let outputFilename = args !! 4
       putStrLn "visualizing julia set..."
@@ -27,7 +27,17 @@ main = do
 visualizeJuliaBench = defaultMain [
     bgroup "visualize julia set" [
       bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output.png" "RSU")
+        1.5 10000 10000 100 "images/output0.png" "VU")
+      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output1.png" "VS")
+      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output2.png" "RSU")
+      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output3.png" "RPU")
+      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output4.png" "RSS")
+      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output5.png" "RPS")
     ]
   ]
   where
@@ -75,13 +85,18 @@ usage = do
   let prog = "stack run"
   -- prog <- getProgName
   putStrLn ("Usages: ") 
+  putStrLn ("    " ++ prog)
   putStrLn ("    " ++ prog ++ " escape_radius width height "
     ++ "max_iter output_filename [func_num")
   putStrLn ("              [constant1 [constant2] ... ]]")
-  putStrLn ("    " ++ prog ++ " b")
+  putStrLn ("    " ++ prog ++ " -- --output benchmark.html")
   putStrLn ""
-  putStrLn "usage 2 (supplying only 'b' as a parameter) will run benchmark"
+  putStrLn "usage 1 (no argments) displays this help"
+  putStrLn ("usage 2 visualizes the julia set created with the " ++
+           "given parameters")
+  putStrLn "usage 3 benchmarks the program"
   putStrLn ""
+  putStrLn "notes on usage 2:"
   putStrLn ("number of constants must correspond to the number of constants "
     ++ "function func_num takes")
   putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "

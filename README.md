@@ -16,7 +16,7 @@ examples:
     stack run 1.5 1000 1000 100 "images/output.png"
     stack run 1.5 1000 1000 100 "images/output.png" 1 "(0.285 :+ 0)"
     stack run 1.5 1000 1000 100 "images/output.png" RPU
-    stack run b 
+    stack run -- --output benchmark.html
 
 the final example, `stack run b` will benchmark the program.
 
