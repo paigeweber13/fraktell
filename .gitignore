@@ -25,3 +25,10 @@ cabal.project.local~
 .stack-work/
 fraktell.cabal
 *~
+
+# benchmark things
+## test images
+images/output*
+
+## results
+*.html
