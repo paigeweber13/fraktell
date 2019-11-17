@@ -30,9 +30,12 @@ runWithCliArgs args
   --     (default_func, 1.5, 1000, 1000, 100, "images/output.png")
   | (length args) < 6 = visualizeJuliaSet default_func r width height
                           maxIter outputFilename "RSU" 
-  | (length args) < 7 = visualizeJuliaSet (parseFunctionParams func_num [])
+  | (length args) < 7 = visualizeJuliaSet default_func r width height
+                          maxIter outputFilename arrayType
+  | (length args) < 8 = visualizeJuliaSet (parseFunctionParams func_num [])
                           r width height maxIter outputFilename "RSU" 
-  | (length args) < 8 = visualizeJuliaSet (parseFunctionParams func_num params)
+  | (length args) < 9 = visualizeJuliaSet
+                          (parseFunctionParams func_num params)
                           r width height maxIter outputFilename "RSU" 
   where
     default_func = f1 ((-0.4) :+ 0.65)
@@ -41,8 +44,9 @@ runWithCliArgs args
     height = read (args !! 2) :: Int
     maxIter = read (args !! 3) :: Int
     outputFilename = args !! 4
-    func_num = read (args!!5) :: Int
-    params = map (read::String -> Complex Double) (slice 6 (length args) args)
+    arrayType = args !! 5
+    func_num = read (args!!6) :: Int
+    params = map (read::String -> Complex Double) (slice 7 (length args) args)
 
 slice :: Int -> Int -> [a] -> [a]
 slice from to xs = take (to - from + 1) (drop from xs)

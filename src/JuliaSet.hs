@@ -18,8 +18,18 @@ visualizeJuliaSet :: (Complex Double -> Complex Double) -- f
                 -> String -- array representation
                 -> IO ()
 visualizeJuliaSet f escapeRadius width height maxIter outputFilename arrType
-  | arrType == "VU" = writeImage outputFilename (makeImageR VU (width, height) g)
-  | arrType == "RSU" = writeImage outputFilename (makeImageR RSU (width, height) g)
+  | arrType == "VU" = writeImage outputFilename 
+      (makeImageR VU (width, height) g)
+  | arrType == "VS" = writeImage outputFilename 
+      (makeImageR VU (width, height) g)
+  | arrType == "RSU" = writeImage outputFilename 
+      (makeImageR RSU (width, height) g)
+  | arrType == "RPU" = writeImage outputFilename 
+      (makeImageR RSU (width, height) g)
+  | arrType == "RSS" = writeImage outputFilename 
+      (makeImageR RSU (width, height) g)
+  | arrType == "RPS" = writeImage outputFilename 
+      (makeImageR RSU (width, height) g)
   | otherwise = writeImage outputFilename (makeImageR RPU (width, height) g)
     where
       g = pixelToJuliaSetValue f escapeRadius width height maxIter
