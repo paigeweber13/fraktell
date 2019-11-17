@@ -26,17 +26,17 @@ main = do
 
 visualizeJuliaBench = defaultMain [
     bgroup "visualize julia set" [
+      bench "f1 ((-0.4) :+ 0.65) VU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output0.png" "VU"),
+      bench "f1 ((-0.4) :+ 0.65) VS" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output1.png" "VS"),
       bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output0.png" "VU")
-      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output1.png" "VS")
-      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output2.png" "RSU")
-      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output3.png" "RPU")
-      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output4.png" "RSS")
-      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output2.png" "RSU"),
+      bench "f1 ((-0.4) :+ 0.65) RPU" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output3.png" "RPU"),
+      bench "f1 ((-0.4) :+ 0.65) RSS" $ nfIO (visualizeJuliaSet default_func  
+        1.5 10000 10000 100 "images/output4.png" "RSS"),
+      bench "f1 ((-0.4) :+ 0.65) RPS" $ nfIO (visualizeJuliaSet default_func  
         1.5 10000 10000 100 "images/output5.png" "RPS")
     ]
   ]
