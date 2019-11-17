@@ -19,15 +19,20 @@ examples:
 ## tests
     stack test
 
-# goals
+# goals / language accomplishments
  * demonstrate good software development practices
    * unittests
  * leverage functional nature of haskell
    * mathematical functions for which we will create julia sets
    * partial application of functions (see Spec.hs "should use partial
      application..." case)
+ * leverage haskell's lazy evaluation
+   * see runWithCliArgs: even if arrayType or func_num are not supplied, the
+     array indexing (lines 46, 47) will not fail!
  * explore parallelism in haskell
    * show speedup when working with large images
+ * write as much as possible in haskell: don't rely too heavily on external
+   scripts and things
 
 # next steps
  * write speedtest
