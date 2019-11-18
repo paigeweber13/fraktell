@@ -4,6 +4,7 @@ module Main where
 import Criterion.Main
 import Data.Complex
 import Data.Tuple
+import Graphics.Image
 import System.Environment
 
 -- local imports
@@ -26,22 +27,25 @@ main = do
 
 visualizeJuliaBench = defaultMain [
     bgroup "visualize julia set" [
-      bench "f1 ((-0.4) :+ 0.65) VU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output0.png" "VU"),
-      bench "f1 ((-0.4) :+ 0.65) VS" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output1.png" "VS"),
-      bench "f1 ((-0.4) :+ 0.65) RSU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output2.png" "RSU"),
-      bench "f1 ((-0.4) :+ 0.65) RPU" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output3.png" "RPU"),
-      bench "f1 ((-0.4) :+ 0.65) RSS" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output4.png" "RSS"),
-      bench "f1 ((-0.4) :+ 0.65) RPS" $ nfIO (visualizeJuliaSet default_func  
-        1.5 10000 10000 100 "images/output5.png" "RPS")
+      bench "f1 ((-0.4) :+ 0.65) VU" $ whnf makeImageVU g,
+      bench "f1 ((-0.4) :+ 0.65) VS" $ whnf makeImageVS g,
+      bench "f1 ((-0.4) :+ 0.65) RSU" $ whnf makeImageRSU g,
+      bench "f1 ((-0.4) :+ 0.65) RPU" $ whnf makeImageRPU g,
+      bench "f1 ((-0.4) :+ 0.65) RSS" $ whnf makeImageRSS g,
+      bench "f1 ((-0.4) :+ 0.65) RPS" $ whnf makeImageRPS g
     ]
   ]
   where
     default_func = f1 ((-0.4) :+ 0.65)
+    g = pixelToJuliaSetValue default_func 1.5 1000 1000 100
+    makeImageVU = makeImageR VU (width, height)
+    makeImageVS = makeImageR VS (width, height)
+    makeImageRSU = makeImageR RSU (width, height)
+    makeImageRPU = makeImageR RPU (width, height)
+    makeImageRSS = makeImageR RSS (width, height)
+    makeImageRPS = makeImageR RPS (width, height)
+    width = 1000
+    height = 1000
 
 -- takes string cli args and returns processed args for visualizeJuliaSet
 runWithCliArgs :: [String] -> IO()
@@ -52,14 +56,14 @@ runWithCliArgs args
   --       default_func, 1.5, 1000, 1000, 100, "images/output.png"))
   --     (default_func, 1.5, 1000, 1000, 100, "images/output.png")
   | (length args) < 6 = visualizeJuliaSet default_func r width height
-                          maxIter outputFilename "RSU" 
+                          maxIter outputFilename "RPU" 
   | (length args) < 7 = visualizeJuliaSet default_func r width height
                           maxIter outputFilename arrayType
   | (length args) < 8 = visualizeJuliaSet (parseFunctionParams func_num [])
-                          r width height maxIter outputFilename "RSU" 
+                          r width height maxIter outputFilename arrayType
   | (length args) < 9 = visualizeJuliaSet
                           (parseFunctionParams func_num params)
-                          r width height maxIter outputFilename "RSU" 
+                          r width height maxIter outputFilename arrayType
   where
     default_func = f1 ((-0.4) :+ 0.65)
     r = read (args !! 0) :: Double
@@ -69,7 +73,8 @@ runWithCliArgs args
     outputFilename = args !! 4
     arrayType = args !! 5
     func_num = read (args!!6) :: Int
-    params = map (read::String -> Complex Double) (slice 7 (length args) args)
+    params = Prelude.map (read::String -> Complex Double) 
+                         (slice 7 (length args) args)
 
 slice :: Int -> Int -> [a] -> [a]
 slice from to xs = take (to - from + 1) (drop from xs)
