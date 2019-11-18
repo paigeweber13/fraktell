@@ -34,13 +34,23 @@ the final example, `stack run b` will benchmark the program.
     stack test
 
 # parameters I've discovered that generate interesting parameters:
+all for function f(z) = x^2 + c
+
+first thing I generated used c = -0.4 + 0.65i
+
+## all interesting and related
  * c = 0 + 0.7885i
  * c = 0 + 0.7885 * exp(-pi/16)i
    * 0.7885 * exp(-pi/16)i ~= 0.646
    * c = 0.66i is also interesting
- * c = 0.8 + -0.156i
- * c = 0.835 + -0.232i
+
+## other interesting ones:
  * c = 0.285 + 0i
+ * c = 0.285 + 0.01i
+ * c = -0.70176 + -0.3842i
+ * c = -0.835 + -0.232i
+ * c = -0.800 + -0.156i
+ * c = -0.7269 + -0.1889i
 
 # goals / language accomplishments
  * demonstrate good software development practices
