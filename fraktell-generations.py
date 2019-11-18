@@ -4,25 +4,27 @@ import subprocess
 golden_ratio=1.618
 
 def main():
-    # experiment_around_065i()
+    experiment_around_065i()
     # experiment_between_04_and_151()
     # some_pretty_ones()
-    high_resolution_ones()
+    # high_resolution_ones()
 
 def run_julia_hs(size, ca, cb, output_dir='images'):
     c_str = "{:.3f}+{:.3f}i".format(ca, cb)
-    subprocess.run(['stack', 'run', '1.5', str(size), str(size), '50',
-                    output_dir + '/julia' + c_str + '.png', 'RPU', '1',
-                    '(' + str(ca) + ' :+ ' + str(cb) +')'])
+    command = ['stack', 'run', '1.5', str(size), str(size), '50',
+               output_dir + '/julia' + c_str + '.png', 'RPU', '1',
+               '(' + str(ca) + ' :+ ' + str(cb) +')']
+    # print(' '.join(command))
+    subprocess.run(command)
     print('image', c_str, 'created with c =', c_str)
 
 def experiment_around_065i():
-    # a = 0.64
-    a = 0.646
-    # while a < 0.68:
-    while a < 0.66:
-        run_julia_hs(1000, 0, a)
-        a += 0.001
+    a = 0.62
+    # a = 0.646
+    while a < 0.70:
+    # while a < 0.66:
+        run_julia_hs(1000, 0, a, 'images/julia-0+0.6i_to_0+0.66i')
+        a += 0.002
 
 def experiment_between_04_and_151():
     a = 0.4
