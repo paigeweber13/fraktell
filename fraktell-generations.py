@@ -42,7 +42,8 @@ def some_pretty_ones():
 
 def high_resolution_ones():
     size = 10000
-    run_julia_hs(size, 0, 0.7885 * exp(-pi/16), output_dir='images/high-res')
+    run_julia_hs(size, 0, 0.7885 * math.exp(-math.pi/16),
+                 output_dir='images/high-res')
     run_julia_hs(size, 0.8, -0.156, output_dir='images/high-res')
     run_julia_hs(size, 0.835, -0.232, output_dir='images/high-res')
     run_julia_hs(size, 0.285, 0, output_dir='images/high-res')

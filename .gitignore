@@ -29,6 +29,7 @@ fraktell.cabal
 # benchmark things
 ## test images
 images/output*
+images/high-res/
 
 ## results
 *.html
