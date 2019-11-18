@@ -92,8 +92,8 @@ usage = do
   putStrLn ("Usages: ") 
   putStrLn ("    " ++ prog)
   putStrLn ("    " ++ prog ++ " escape_radius width height "
-    ++ "max_iter output_filename [func_num")
-  putStrLn ("              [constant1 [constant2] ... ]]")
+            ++ "max_iter output_filename [arrType]")
+  putStrLn ("              [func_num [constant1 [constant2] ... ]]")
   putStrLn ("    " ++ prog ++ " -- --output benchmark.html")
   putStrLn ""
   putStrLn "usage 1 (no argments) displays this help"
@@ -107,4 +107,4 @@ usage = do
   putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "
     ++ "\"images/output.png\"")
   putStrLn ("example: " ++ prog ++ " 1.5 1000 1000 100 "
-    ++ "\"images/output.png\" 1 \"(0.285 :+ 0)\"")
+    ++ "\"images/output.png\" RPU 1 \"(0.285 :+ 0)\"")
