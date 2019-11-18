@@ -38,6 +38,9 @@ the final example, `stack run b` will benchmark the program.
  * c = 0 + 0.7885 * exp(-pi/16)i
    * 0.7885 * exp(-pi/16)i ~= 0.646
    * c = 0.66i is also interesting
+ * c = 0.8 + -0.156i
+ * c = 0.835 + -0.232i
+ * c = 0.285 + 0i
 
 # goals / language accomplishments
  * demonstrate good software development practices
