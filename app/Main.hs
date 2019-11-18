@@ -21,9 +21,9 @@ main = do
       visualizeJuliaBench
     else do
       let outputFilename = args !! 4
-      putStrLn "visualizing julia set..."
+      -- putStrLn "visualizing julia set..."
       runWithCliArgs args
-      putStrLn ("Done! Image output to " ++ outputFilename)
+      -- putStrLn ("Done! Image output to " ++ outputFilename)
 
 visualizeJuliaBench = defaultMain [
     bgroup "visualize julia set" [
