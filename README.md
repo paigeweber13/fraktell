@@ -33,6 +33,12 @@ the final example, `stack run b` will benchmark the program.
 ## tests
     stack test
 
+# parameters I've discovered that generate interesting parameters:
+ * c = 0 + 0.7885i
+ * c = 0 + 0.7885 * exp(-pi/16)i
+   * 0.7885 * exp(-pi/16)i ~= 0.646
+   * c = 0.66i is also interesting
+
 # goals / language accomplishments
  * demonstrate good software development practices
    * unittests
