@@ -40,6 +40,9 @@ the final example, `stack run b` will benchmark the program.
 
 # next steps
  * write speedtest
+ * benchmark on mamba
+ * put benchmarks in `benchmark` folder and commit
+ * visualize speedup
  * generate large images
  * work on speedup
  * play around with different fractals that we can generate
