@@ -18,14 +18,14 @@ main = do
     usage
   else do
     if length args < 5 then do
-      visualizeJuliaBench
+      visualizeJuliaBenchCriterion
     else do
       let outputFilename = args !! 4
       putStrLn "visualizing julia set..."
       runWithCliArgs args
       putStrLn ("Done! Image output to " ++ outputFilename)
 
-visualizeJuliaBench = defaultMain [
+visualizeJuliaBenchCriterion = defaultMain [
     bgroup "visualize julia set" [
       bench "f1 ((-0.4) :+ 0.65) VU" $ whnf makeImageVU g,
       bench "f1 ((-0.4) :+ 0.65) VS" $ whnf makeImageVS g,
@@ -55,15 +55,18 @@ runWithCliArgs args
   --     putStrLn "using default values " ++ (show (
   --       default_func, 1.5, 1000, 1000, 100, "images/output.png"))
   --     (default_func, 1.5, 1000, 1000, 100, "images/output.png")
-  | (length args) < 6 = visualizeJuliaSet default_func r width height
-                          maxIter outputFilename "RPU" 
-  | (length args) < 7 = visualizeJuliaSet default_func r width height
-                          maxIter outputFilename arrayType
-  | (length args) < 8 = visualizeJuliaSet (parseFunctionParams func_num [])
-                          r width height maxIter outputFilename arrayType
-  | (length args) < 9 = visualizeJuliaSet
+  | (length args) < 6 = writeImage (visualizeJuliaSet default_func r width
+                          height maxIter outputFilename "RPU") outputFilename
+  | (length args) < 7 = writeImage (visualizeJuliaSet default_func r width 
+                          height maxIter outputFilename arrayType) 
+                          outputFilename
+  | (length args) < 8 = writeImage (visualizeJuliaSet (parseFunctionParams 
+                          func_num []) r width height maxIter outputFilename 
+                          arrayType) outputFilename
+  | (length args) < 9 = writeImage (visualizeJuliaSet
                           (parseFunctionParams func_num params)
-                          r width height maxIter outputFilename arrayType
+                          r width height maxIter outputFilename arrayType)
+                          outputFilename
   where
     default_func = f1 ((-0.4) :+ 0.65)
     r = read (args !! 0) :: Double
