@@ -4,7 +4,9 @@ module Main where
 import Criterion.Main
 import Data.Complex
 import Data.Tuple
+import Prelude as P
 import Graphics.Image
+import Graphics.Image.Interface as II
 import System.Environment
 
 -- local imports
@@ -18,34 +20,43 @@ main = do
     usage
   else do
     if length args < 5 then do
-      visualizeJuliaBench
+      putStrLn (show (index00 visualizeJuliaBench))
     else do
       let outputFilename = args !! 4
       -- putStrLn "visualizing julia set..."
       runWithCliArgs args
       -- putStrLn ("Done! Image output to " ++ outputFilename)
 
-visualizeJuliaBench = defaultMain [
-    bgroup "visualize julia set" [
-      -- bench "f1 ((-0.4) :+ 0.65) VU" $ whnf makeImageVU g,
-      -- bench "f1 ((-0.4) :+ 0.65) VS" $ whnf makeImageVS g,
-      bench "f1 ((-0.4) :+ 0.65) RSU" $ whnf makeImageRSU g,
-      bench "f1 ((-0.4) :+ 0.65) RPU" $ whnf makeImageRPU g,
-      bench "f1 ((-0.4) :+ 0.65) RSS" $ whnf makeImageRSS g,
-      bench "f1 ((-0.4) :+ 0.65) RPS" $ whnf makeImageRPS g
-    ]
-  ]
+visualizeJuliaBench = 
+  II.compute image
   where
+    image = makeImageR RPU (width, height) g
     default_func = f1 ((-0.4) :+ 0.65)
     g = pixelToJuliaSetValue default_func 1.5 width height 100
-    -- makeImageVU = makeImageR VU (width, height)
-    -- makeImageVS = makeImageR VS (width, height)
-    makeImageRSU = makeImageR RSU (width, height)
-    makeImageRPU = makeImageR RPU (width, height)
-    makeImageRSS = makeImageR RSS (width, height)
-    makeImageRPS = makeImageR RPS (width, height)
     width = 10000
     height = 10000
+
+-- visualizeJuliaBench = defaultMain [
+--     bgroup "visualize julia set" [
+--       -- bench "f1 ((-0.4) :+ 0.65) VU" $ whnf makeImageVU g,
+--       -- bench "f1 ((-0.4) :+ 0.65) VS" $ whnf makeImageVS g,
+--       bench "f1 ((-0.4) :+ 0.65) RSU" $ whnf makeImageRSU g,
+--       bench "f1 ((-0.4) :+ 0.65) RPU" $ whnf makeImageRPU g,
+--       bench "f1 ((-0.4) :+ 0.65) RSS" $ whnf makeImageRSS g,
+--       bench "f1 ((-0.4) :+ 0.65) RPS" $ whnf makeImageRPS g
+--     ]
+--   ]
+--   where
+--     default_func = f1 ((-0.4) :+ 0.65)
+--     g = pixelToJuliaSetValue default_func 1.5 width height 100
+--     -- makeImageVU = makeImageR VU (width, height)
+--     -- makeImageVS = makeImageR VS (width, height)
+--     makeImageRSU = makeImageR RSU (width, height)
+--     makeImageRPU = makeImageR RPU (width, height)
+--     makeImageRSS = makeImageR RSS (width, height)
+--     makeImageRPS = makeImageR RPS (width, height)
+--     width = 10000
+--     height = 10000
 
 -- takes string cli args and returns processed args for visualizeJuliaSet
 runWithCliArgs :: [String] -> IO()
@@ -66,14 +77,14 @@ runWithCliArgs args
                           r width height maxIter outputFilename arrayType
   where
     default_func = f1 ((-0.4) :+ 0.65)
-    r = read (args !! 0) :: Double
-    width = read (args !! 1) :: Int
-    height = read (args !! 2) :: Int
-    maxIter = read (args !! 3) :: Int
+    r = P.read (args !! 0) :: Double
+    width = P.read (args !! 1) :: Int
+    height = P.read (args !! 2) :: Int
+    maxIter = P.read (args !! 3) :: Int
     outputFilename = args !! 4
     arrayType = args !! 5
-    func_num = read (args!!6) :: Int
-    params = Prelude.map (read::String -> Complex Double) 
+    func_num = P.read (args!!6) :: Int
+    params = P.map (P.read::String -> Complex Double) 
                          (slice 7 (length args) args)
 
 slice :: Int -> Int -> [a] -> [a]
