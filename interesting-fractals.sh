@@ -1,0 +1,5 @@
+stack run 1.5 1000 1000 100 images/demo/output0.png RPU 1 "(-0.70176 :+ -0.3842)"
+stack run 1.5 1000 1000 100 images/demo/output1.png RPU 1 "(-0.835 :+ -0.232)"
+stack run 1.5 1000 1000 100 images/demo/output2.png RPU 1 "(-0.800 :+ -0.156)"
+stack run 1.5 1000 1000 100 images/demo/output3.png RPU 1 "(-0.7269 :+ -0.1889)"
+stack run 1.5 1000 1000 30 images/demo/output4.png RPU 1 "(-0.61803 :+ 0)"
