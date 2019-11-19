@@ -27,8 +27,8 @@ main = do
 
 visualizeJuliaBench = defaultMain [
     bgroup "visualize julia set" [
-      bench "f1 ((-0.4) :+ 0.65) VU" $ whnf makeImageVU g,
-      bench "f1 ((-0.4) :+ 0.65) VS" $ whnf makeImageVS g,
+      -- bench "f1 ((-0.4) :+ 0.65) VU" $ whnf makeImageVU g,
+      -- bench "f1 ((-0.4) :+ 0.65) VS" $ whnf makeImageVS g,
       bench "f1 ((-0.4) :+ 0.65) RSU" $ whnf makeImageRSU g,
       bench "f1 ((-0.4) :+ 0.65) RPU" $ whnf makeImageRPU g,
       bench "f1 ((-0.4) :+ 0.65) RSS" $ whnf makeImageRSS g,
@@ -37,15 +37,15 @@ visualizeJuliaBench = defaultMain [
   ]
   where
     default_func = f1 ((-0.4) :+ 0.65)
-    g = pixelToJuliaSetValue default_func 1.5 1000 1000 100
-    makeImageVU = makeImageR VU (width, height)
-    makeImageVS = makeImageR VS (width, height)
+    g = pixelToJuliaSetValue default_func 1.5 width height 100
+    -- makeImageVU = makeImageR VU (width, height)
+    -- makeImageVS = makeImageR VS (width, height)
     makeImageRSU = makeImageR RSU (width, height)
     makeImageRPU = makeImageR RPU (width, height)
     makeImageRSS = makeImageR RSS (width, height)
     makeImageRPS = makeImageR RPS (width, height)
-    width = 1000
-    height = 1000
+    width = 10000
+    height = 10000
 
 -- takes string cli args and returns processed args for visualizeJuliaSet
 runWithCliArgs :: [String] -> IO()
