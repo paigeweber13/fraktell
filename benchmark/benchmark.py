@@ -34,17 +34,17 @@ def main():
     print('\ntesting for various image sizes (sequential):')
     print_csv_header()
     for size in range(1000, 5001, 1000):
-        run_julia_hs(size, 1, 'RPU')
+        run_julia_hs(size, 1, 'RSU')
 
     print('\ntesting for various image sizes (parallel):')
     print_csv_header()
     for size in range(1000, 5001, 1000):
         run_julia_hs(size, 12, 'RPU')
 
-    print('\ntesting for various number or processors:')
+    print('\ntesting for various number of processors:')
     print_csv_header()
     for num_procs in range(1, 17):
-        run_julia_hs(2000, num_procs, 'RPU')
+        run_julia_hs(3000, num_procs, 'RPU')
 
 if __name__ == '__main__':
     main()
