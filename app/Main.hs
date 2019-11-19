@@ -16,25 +16,31 @@ import JuliaSet
 main :: IO ()
 main = do
   args <- getArgs
-  if length args == 0 then do
+  if length args < 6 then do
     usage
   else do
-    if length args < 5 then do
-      putStrLn (show (index00 visualizeJuliaBench))
-    else do
-      let outputFilename = args !! 4
-      -- putStrLn "visualizing julia set..."
-      runWithCliArgs args
-      -- putStrLn ("Done! Image output to " ++ outputFilename)
+    -- let outputFilename = args !! 4
+    -- putStrLn "visualizing julia set..."
+    runWithCliArgs args
+    -- putStrLn ("Done! Image output to " ++ outputFilename)
 
-visualizeJuliaBench = 
-  II.compute image
+visualizeJuliaBench f r width height maxIter outputFilename arrType
+  | arrType == "VU" = putStrLn (show (index 00 (II.compute 
+                      (makeImageR RPU (width, height) g))))
+  | arrType == "VS" = putStrLn (show (index 00 (II.compute 
+                      (makeImageR RPU (width, height) g))))
+  | arrType == "RSU" = putStrLn (show (index 00 (II.compute 
+                       (makeImageR RPU (width, height) g))))
+  | arrType == "RPU" = putStrLn (show (index 00 (II.compute 
+                       (makeImageR RPU (width, height) g))))
+  | arrType == "RSS" = putStrLn (show (index 00 (II.compute 
+                       (makeImageR RPU (width, height) g))))
+  | arrType == "RPS" = putStrLn (show (index 00 (II.compute 
+                       (makeImageR RPU (width, height) g))))
+  | otherwise = putStrLn (show (index 00 (II.compute 
+                         (makeImageR RPU (width, height) g))))
   where
-    image = makeImageR RPU (width, height) g
-    default_func = f1 ((-0.4) :+ 0.65)
-    g = pixelToJuliaSetValue default_func 1.5 width height 100
-    width = 10000
-    height = 10000
+    g = pixelToJuliaSetValue f r width height maxIter
 
 -- visualizeJuliaBench = defaultMain [
 --     bgroup "visualize julia set" [
@@ -66,26 +72,32 @@ runWithCliArgs args
   --     putStrLn "using default values " ++ (show (
   --       default_func, 1.5, 1000, 1000, 100, "images/output.png"))
   --     (default_func, 1.5, 1000, 1000, 100, "images/output.png")
-  | (length args) < 6 = visualizeJuliaSet default_func r width height
+  | (length args) < 7 = run default_func r width height
                           maxIter outputFilename "RPU" 
-  | (length args) < 7 = visualizeJuliaSet default_func r width height
+  | (length args) < 8 = run default_func r width height
                           maxIter outputFilename arrayType
-  | (length args) < 8 = visualizeJuliaSet (parseFunctionParams func_num [])
+  | (length args) < 9 = run (parseFunctionParams func_num [])
                           r width height maxIter outputFilename arrayType
-  | (length args) < 9 = visualizeJuliaSet
-                          (parseFunctionParams func_num params)
+  | (length args) < 10 = run (parseFunctionParams func_num params)
                           r width height maxIter outputFilename arrayType
   where
     default_func = f1 ((-0.4) :+ 0.65)
-    r = P.read (args !! 0) :: Double
-    width = P.read (args !! 1) :: Int
-    height = P.read (args !! 2) :: Int
-    maxIter = P.read (args !! 3) :: Int
-    outputFilename = args !! 4
-    arrayType = args !! 5
-    func_num = P.read (args!!6) :: Int
+    benchOrGen = (args !! 0)
+    r = P.read (args !! 1) :: Double
+    width = P.read (args !! 2) :: Int
+    height = P.read (args !! 3) :: Int
+    maxIter = P.read (args !! 4) :: Int
+    outputFilename = args !! 5
+    arrayType = args !! 6
+    func_num = P.read (args!!7) :: Int
     params = P.map (P.read::String -> Complex Double) 
-                         (slice 7 (length args) args)
+                         (slice 8 (length args) args)
+
+run benchOrGen f r width height maxIter outputFilename arrayType
+  | benchOrGen == 'b' = visualizeJuliaBench f r width height maxIter 
+                                          outputFilename arrayType
+  | benchOrGen == 'g' = visualizeJuliaSet f r width height maxIter 
+                                          outputFilename arrayType
 
 slice :: Int -> Int -> [a] -> [a]
 slice from to xs = take (to - from + 1) (drop from xs)
