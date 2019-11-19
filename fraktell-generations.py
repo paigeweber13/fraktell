@@ -1,7 +1,7 @@
 import math
 import subprocess
 
-golden_ratio=1.618
+golden_ratio=1.61803
 
 def main():
     experiment_around_065i()
